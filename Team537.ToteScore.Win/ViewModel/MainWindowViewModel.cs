@@ -46,7 +46,9 @@ namespace Team537.ToteScore.Win.ViewModel
                     autoScore += 8;
                 }
 
-                return autoScore + stackScore + coopertitionScore;
+                var litterScore = scoredLitter + (unprocessedLitter * 4);
+
+                return autoScore + stackScore + coopertitionScore + litterScore;
             }
         }
 
@@ -59,9 +61,15 @@ namespace Team537.ToteScore.Win.ViewModel
 
         public void Reset()
         {
+            this.UnprocessedLitter = 0;
+            this.ScoredLitter = 0;
             Stacks.Clear();
             this.CoopertitionSet = false;
             this.CoopertitionStack = false;
+            this.RobotSet = false;
+            this.ToteSet = false;
+            this.StackedToteSet = false;
+            this.ContainerSet = false;
         }
 
         void StackPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -81,6 +89,7 @@ namespace Team537.ToteScore.Win.ViewModel
                     robotSet = value;
                     this.NotifyPropertyChanged();
                     this.NotifyPropertyChanged("TotalScore");
+                    this.NotifyPropertyChanged("CanChangeTeam");
                 }
             }
         }
@@ -100,6 +109,7 @@ namespace Team537.ToteScore.Win.ViewModel
                     }
                     this.NotifyPropertyChanged();
                     this.NotifyPropertyChanged("TotalScore");
+                    this.NotifyPropertyChanged("CanChangeTeam");
                 }
             }
         }
@@ -119,6 +129,7 @@ namespace Team537.ToteScore.Win.ViewModel
                     }
                     this.NotifyPropertyChanged();
                     this.NotifyPropertyChanged("TotalScore");
+                    this.NotifyPropertyChanged("CanChangeTeam");
                 }
             }
         }
@@ -134,6 +145,7 @@ namespace Team537.ToteScore.Win.ViewModel
                     toteSet = value;
                     this.NotifyPropertyChanged();
                     this.NotifyPropertyChanged("TotalScore");
+                    this.NotifyPropertyChanged("CanChangeTeam");
                 }
             }
         }
@@ -215,6 +227,36 @@ namespace Team537.ToteScore.Win.ViewModel
             get
             {
                 return isRed ? "Red" : "Blue";
+            }
+        }
+
+        private int unprocessedLitter;
+        public int UnprocessedLitter
+        {
+            get { return unprocessedLitter; }
+            set
+            {
+                if (value != unprocessedLitter)
+                {
+                    unprocessedLitter = value;
+                    this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("TotalScore");
+                }
+            }
+        }
+
+        private int scoredLitter;
+        public int ScoredLitter
+        {
+            get { return scoredLitter; }
+            set
+            {
+                if (value != scoredLitter)
+                {
+                    scoredLitter = value;
+                    this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("TotalScore");
+                }
             }
         }
 

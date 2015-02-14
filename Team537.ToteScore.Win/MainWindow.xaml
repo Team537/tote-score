@@ -17,6 +17,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Horizontal" Grid.Row="0">
@@ -90,11 +91,29 @@
         
         <Button Grid.Row="5" x:Name="AddStackButton" Width="100" Click="AddStackButton_Click">Add Stack</Button>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="6">
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center">Unprocessed Litter</TextBlock>
+            <TextBox Grid.Column="1" Width="100" Margin="5" Text="{Binding UnprocessedLitter}"></TextBox>
+            
+            <TextBlock Grid.Column="2" VerticalAlignment="Center">Landfill Litter</TextBlock>
+            <TextBox Grid.Column="3" Width="100" Margin="5" Text="{Binding ScoredLitter}"></TextBox>
+            
+            <Button Grid.Column="4" Margin="5">Blah</Button>
+        </Grid>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="7">
             <TextBlock VerticalAlignment="Center">Coopertition</TextBlock>
             <ToggleButton Width="100" Margin="5" IsChecked="{Binding CoopertitionSet}">Set</ToggleButton>
             <ToggleButton Width="100" Margin="5" IsChecked="{Binding CoopertitionStack}">Stack</ToggleButton>
         </StackPanel>
-        
+
+
     </Grid>
 </Window>
