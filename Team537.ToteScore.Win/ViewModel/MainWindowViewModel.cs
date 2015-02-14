@@ -21,7 +21,9 @@ namespace Team537.ToteScore.Win.ViewModel
         {
             get
             {
-                return Stacks.Sum(s => s.Score);
+                var stackScore = Stacks.Sum(s => s.Score);
+                var coopertitionScore = coopertitionStack ? 40 : coopertitionSet ? 20 : 0;
+                return stackScore + coopertitionScore;
             }
         }
 
@@ -35,6 +37,46 @@ namespace Team537.ToteScore.Win.ViewModel
         void StackPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             this.NotifyPropertyChanged("TotalScore");
+        }
+        
+        private bool coopertitionSet;
+        public bool CoopertitionSet
+        {
+            get { return coopertitionSet; }
+            set
+            {
+                if (value != coopertitionSet)
+                {
+                    coopertitionSet = value;
+                    if (value)
+                    {
+                        CoopertitionStack = false;
+                    }
+                    this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("CoopertitionSet");
+                    this.NotifyPropertyChanged("TotalScore");
+                }
+            }
+        }
+
+        private bool coopertitionStack;
+        public bool CoopertitionStack
+        {
+            get { return coopertitionStack; }
+            set
+            {
+                if (value != coopertitionStack)
+                {
+                    coopertitionStack = value;
+                    if (value)
+                    {
+                        CoopertitionSet = false;
+                    }
+                    this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("CoopertitionStack");
+                    this.NotifyPropertyChanged("TotalScore");
+                }
+            }
         }
     }
 }

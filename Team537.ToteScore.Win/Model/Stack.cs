@@ -78,7 +78,77 @@ namespace Team537.ToteScore.Win.Model
                     height = value;
                     this.NotifyPropertyChanged();
                     this.NotifyPropertyChanged("Score");
+                    this.NotifyPropertyChanged("Height0");
+                    this.NotifyPropertyChanged("Height1");
+                    this.NotifyPropertyChanged("Height2");
+                    this.NotifyPropertyChanged("Height3");
+                    this.NotifyPropertyChanged("Height4");
+                    this.NotifyPropertyChanged("Height5");
+                    this.NotifyPropertyChanged("Height6");
                 }
+            }
+        }
+
+        public bool Height0
+        {
+            get { return height >= 0; }
+            set
+            {
+                SetHeight(0);
+            }
+        }
+
+        public bool Height1
+        {
+            get { return height >= 1; }
+            set
+            {
+                SetHeight(1);
+            }
+        }
+
+        public bool Height2
+        {
+            get { return height >= 2; }
+            set
+            {
+                SetHeight(2);
+            }
+        }
+
+        public bool Height3
+        {
+            get { return height >= 3; }
+            set
+            {
+                SetHeight(3);
+            }
+        }
+
+        public bool Height4
+        {
+            get { return height >= 4; }
+            set
+            {
+                SetHeight(4);
+            }
+        }
+
+        public bool Height5
+        {
+            get { return height >= 5; }
+            set
+            {
+                SetHeight(5);
+            }
+        }
+
+        public bool Height6
+        {
+            get { return height >= 6; }
+            set
+            {
+                SetHeight(6);
             }
         }
 
@@ -92,13 +162,6 @@ namespace Team537.ToteScore.Win.Model
 
                 return stackScore + canScore + litterScore;
             }
-        }
-
-        public void Clear()
-        {
-            Height = 0;
-            Can = false;
-            Litter = false;
         }
     }
 }
