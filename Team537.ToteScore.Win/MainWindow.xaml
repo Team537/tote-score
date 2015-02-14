@@ -1,0 +1,55 @@
+﻿<Window x:Class="Team537.ToteScore.Win.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="MainWindow" Height="350" Width="525"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignData Source=/SampleData/MainWindowSampleData.xaml}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button>Reset</Button>
+            <Button x:Name="AddStackButton" Click="AddStackButton_Click">Add Stack</Button>
+            <TextBlock Text="{Binding TotalScore}" Width="50" />
+        </StackPanel>
+        
+        <Grid Grid.Row="1">
+            <ListBox ItemsSource="{Binding Stacks}" HorizontalContentAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0" Command="{Binding SetHeightCommand}" CommandParameter="0">X</Button>
+                            <Button Grid.Column="1" Command="{Binding SetHeightCommand}" CommandParameter="1">1</Button>
+                            <Button Grid.Column="2" Command="{Binding SetHeightCommand}" CommandParameter="2">2</Button>
+                            <Button Grid.Column="3" Command="{Binding SetHeightCommand}" CommandParameter="3">3</Button>
+                            <Button Grid.Column="4" Command="{Binding SetHeightCommand}" CommandParameter="4">4</Button>
+                            <Button Grid.Column="5" Command="{Binding SetHeightCommand}" CommandParameter="5">5</Button>
+                            <Button Grid.Column="6" Command="{Binding SetHeightCommand}" CommandParameter="6">6</Button>
+                            <ToggleButton Grid.Column="7" IsChecked="{Binding Can}">Can</ToggleButton>
+                            <ToggleButton Grid.Column="8" IsChecked="{Binding Litter}">Litter</ToggleButton>
+
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        
+    </Grid>
+</Window>

@@ -1,0 +1,8 @@
+﻿<vm:MainWindowViewModel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:m="clr-namespace:Team537.ToteScore.Win.Model"
+                        xmlns:vm="clr-namespace:Team537.ToteScore.Win.ViewModel">
+    <vm:MainWindowViewModel.Stacks>
+        <m:Stack Height="5" Can="True" Litter="False" />
+    </vm:MainWindowViewModel.Stacks>
+</vm:MainWindowViewModel>
