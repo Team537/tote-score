@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,19 +26,105 @@ namespace Team537.ToteScore.Win
     public partial class MainWindow : Window
     {
         private MainWindowViewModel viewModel;
+        TcpClient client = null;
+        StreamWriter writer = null;
 
         public MainWindow()
         {
             InitializeComponent();
 
             viewModel = new MainWindowViewModel();
+            viewModel.PropertyChanged += viewModel_PropertyChanged;
+
+            viewModel.ConnectionAddress = "127.0.0.1";
+            viewModel.CanConnect = true;
+            viewModel.CanDisconnect = false;
 
             this.DataContext = viewModel;
+        }
+
+        void viewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "TotalScore" && client != null && client.Connected && writer != null)
+            {
+                var command = String.Format("{0} {1}", viewModel.IsRed ? "rs" : "bs", viewModel.TotalScore);
+
+                try
+                {
+                    writer.WriteLine(command);
+                    writer.Flush();
+                    Debug.WriteLine("command sent");
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    this.Disconnect();
+                }
+            }
         }
 
         private void AddStackButton_Click(object sender, RoutedEventArgs e)
         {
             viewModel.AddStack();
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            var messageBoxResult = MessageBox.Show("Are you sure you want to reset? Cannot be undone.", "", MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                viewModel.Reset();
+            }
+        }
+
+        private async void Connect_Click(object sender, RoutedEventArgs e)
+        {
+            var ipAddress = viewModel.ConnectionAddress;
+            Debug.WriteLine(ipAddress);
+
+            IPAddress remoteServer;
+            if (!IPAddress.TryParse(ipAddress, out remoteServer))
+            {
+                MessageBox.Show("Invalid address");
+            }
+
+            try
+            {
+                client = new TcpClient();
+                await client.ConnectAsync(remoteServer, 8005);
+                writer = new StreamWriter(client.GetStream());
+
+                viewModel.CanConnect = false;
+                viewModel.CanDisconnect = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void Disconnect_Click(object sender, RoutedEventArgs e)
+        {
+            this.Disconnect();
+        }
+
+        private void Disconnect()
+        {
+            try
+            {
+                client.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            writer = null;
+            Debug.WriteLine("Disconnected");
+
+            viewModel.CanConnect = true;
+            viewModel.CanDisconnect = false;
         }
     }
 }

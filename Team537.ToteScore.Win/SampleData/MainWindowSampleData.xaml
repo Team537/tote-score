@@ -3,6 +3,6 @@
                         xmlns:m="clr-namespace:Team537.ToteScore.Win.Model"
                         xmlns:vm="clr-namespace:Team537.ToteScore.Win.ViewModel">
     <vm:MainWindowViewModel.Stacks>
-        <m:Stack Height="5" Can="True" Litter="False" />
+        <m:Stack Height1="True" Can="True" Litter="False" />
     </vm:MainWindowViewModel.Stacks>
 </vm:MainWindowViewModel>

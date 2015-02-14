@@ -11,22 +11,53 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
-        <Grid Grid.Row="0">
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <TextBlock Margin="5">Address: </TextBlock>
+            <TextBox Text="{Binding ConnectionAddress}" Width="150" IsReadOnly="{Binding CanDisconnect}" />
+            <Button x:Name="ConnectButton" Margin="5" IsEnabled="{Binding CanConnect}" Click="Connect_Click">Connect</Button>
+            <Button x:Name="DisconnectButton" Margin="5" IsEnabled="{Binding CanDisconnect}" Click="Disconnect_Click">Disconnect</Button>
+        </StackPanel>
+        
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0">Reset</Button>
-            <TextBlock Grid.Column="2" Text="{Binding TotalScore}" TextAlignment="Center" />
+            <Button Grid.Column="0" x:Name="ResetButton" Click="ResetButton_Click">Reset</Button>
+            <ToggleButton Grid.Column="1" x:Name="RedButton" IsChecked="{Binding IsRed}" IsEnabled="{Binding CanChangeTeam}">Red</ToggleButton>
+            <TextBlock Grid.Column="2" TextAlignment="Center">
+                <Run>Alliance: </Run>
+                <Run Text="{Binding CurrentAlliance, Mode=OneWay}" />
+            </TextBlock>
+            <ToggleButton Grid.Column="3" x:Name="BlueButton" IsChecked="{Binding IsBlue}" IsEnabled="{Binding CanChangeTeam}">Blue</ToggleButton>
+            <TextBlock Grid.Column="4" TextAlignment="Center">
+                <Run>Score: </Run>
+                <Run Text="{Binding TotalScore, Mode=OneWay}" />
+            </TextBlock>
         </Grid>
 
-        <ListBox Grid.Row="1" ItemsSource="{Binding Stacks}" HorizontalContentAlignment="Stretch">
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <TextBlock VerticalAlignment="Center">Autonomous</TextBlock>
+            <ToggleButton Width="100" Margin="5" IsChecked="{Binding RobotSet}">Robot Set</ToggleButton>
+            <ToggleButton Width="100" Margin="5" IsChecked="{Binding ToteSet}">Tote Set</ToggleButton>
+            <ToggleButton Width="100" Margin="5" IsChecked="{Binding StackedToteSet}">Stacked Tote Set</ToggleButton>
+            <ToggleButton Width="100" Margin="5" IsChecked="{Binding ContainerSet}">Container Set</ToggleButton>
+        </StackPanel>
+        
+        <TextBlock Text="Stacks:" Grid.Row="3" />
+        
+        <ListBox Grid.Row="4" ItemsSource="{Binding Stacks}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Height="25">
@@ -57,9 +88,9 @@
             </ListBox.ItemTemplate>
         </ListBox>
         
-        <Button Grid.Row="2" x:Name="AddStackButton" Width="100" Click="AddStackButton_Click">Add Stack</Button>
+        <Button Grid.Row="5" x:Name="AddStackButton" Width="100" Click="AddStackButton_Click">Add Stack</Button>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3">
+        <StackPanel Orientation="Horizontal" Grid.Row="6">
             <TextBlock VerticalAlignment="Center">Coopertition</TextBlock>
             <ToggleButton Width="100" Margin="5" IsChecked="{Binding CoopertitionSet}">Set</ToggleButton>
             <ToggleButton Width="100" Margin="5" IsChecked="{Binding CoopertitionStack}">Stack</ToggleButton>
