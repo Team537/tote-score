@@ -152,16 +152,32 @@ namespace Team537.ToteScore.Win.Model
             }
         }
 
-        public int Score
+        public int CanScore
+        {
+            get
+            {
+                var canScore = can ? height * 4 : 0;
+                return canScore;
+            }
+        }
+
+        public int LitterScore
+        {
+            get
+            {
+                return litter ? 6 : 0;
+            }
+        }
+
+        public int ToteScore
         {
             get
             {
                 var stackScore = height * 2;
-                var canScore = can ? height * 4 : 0;
-                var litterScore = litter ? 6 : 0;
-
-                return stackScore + canScore + litterScore;
+                return stackScore;
             }
         }
+
+        public int TotalScore { get { return CanScore + ToteScore + LitterScore; } }
     }
 }

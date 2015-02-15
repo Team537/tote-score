@@ -17,20 +17,33 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
-            <TextBlock Margin="5">Address: </TextBlock>
-            <TextBox Text="{Binding ConnectionAddress}" Width="150" IsReadOnly="{Binding CanDisconnect}" />
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="3">
+            <TextBlock Margin="5">Audiance: </TextBlock>
+            <TextBox Text="{Binding ConnectionAddress}" Width="125" IsReadOnly="{Binding CanDisconnect}" />
             <Button x:Name="ConnectButton" Margin="5" IsEnabled="{Binding CanConnect}" Click="Connect_Click">Connect</Button>
             <Button x:Name="DisconnectButton" Margin="5" IsEnabled="{Binding CanDisconnect}" Click="Disconnect_Click">Disconnect</Button>
-
-            <Button Margin="5" x:Name="ResetButton" Click="ResetButton_Click">Reset Scores</Button>
-
         </StackPanel>
-        
-        <w:AllianceControl Grid.Row="1" Grid.Column="0" DataContext="{Binding Red}" />
 
-        <w:AllianceControl Grid.Row="1" Grid.Column="1" DataContext="{Binding Blue}" />
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <Button Margin="5" x:Name="ResetButton" Click="ResetButton_Click">Reset Scores</Button>
+            <TextBlock Margin="5">M:</TextBlock>
+            <TextBox Text="{Binding MatchNumber}" Width="30" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Right">
+            <TextBlock Margin="5">Results:</TextBlock>
+            <TextBox Text="{Binding ResultsAddress}" Width="200" IsReadOnly="{Binding CanDisconnect}" />
+            <Button x:Name="CommitButton" Margin="5" Click="CommitButton_Click">Commit</Button>
+        </StackPanel>
+
+        <w:AllianceControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" DataContext="{Binding Red}" />
+
+        <w:AllianceControl Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" DataContext="{Binding Blue}" />
     </Grid>
 </Window>

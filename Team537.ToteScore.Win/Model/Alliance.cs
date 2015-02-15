@@ -16,41 +16,6 @@ namespace Team537.ToteScore.Win.Model
             Stacks = new ObservableCollection<Stack>();
         }
 
-        public int TotalScore
-        {
-            get
-            {
-                var stackScore = Stacks.Sum(s => s.Score);
-                var coopertitionScore = coopertitionStack ? 40 : coopertitionSet ? 20 : 0;
-
-                var autoScore = 0;
-
-                if (toteSet)
-                {
-                    autoScore += 6;
-                }
-
-                if (stackedToteSet)
-                {
-                    autoScore += 20;
-                }
-
-                if (robotSet)
-                {
-                    autoScore += 4;
-                }
-
-                if (containerSet)
-                {
-                    autoScore += 8;
-                }
-
-                var litterScore = scoredLitter + (unprocessedLitter * 4);
-
-                return autoScore + stackScore + coopertitionScore + litterScore;
-            }
-        }
-
         public void AddStack()
         {
             var stack = new Stack();
@@ -234,6 +199,79 @@ namespace Team537.ToteScore.Win.Model
                     this.NotifyPropertyChanged();
                     this.NotifyPropertyChanged("TotalScore");
                 }
+            }
+        }
+
+        // reporting scores
+ 
+        public int CoopScore
+        {
+            get
+            {
+                return coopertitionStack ? 40 : coopertitionSet ? 20 : 0;
+            }
+        }
+
+        public int AutoScore
+        {
+            get
+            {
+                var autoScore = 0;
+
+                if (toteSet)
+                {
+                    autoScore += 6;
+                }
+
+                if (stackedToteSet)
+                {
+                    autoScore += 20;
+                }
+
+                if (robotSet)
+                {
+                    autoScore += 4;
+                }
+
+                if (containerSet)
+                {
+                    autoScore += 8;
+                }
+                return autoScore;
+            }
+        }
+
+        public int CanScore
+        {
+            get
+            {
+                return Stacks.Sum(s => s.CanScore);
+            }
+        }
+
+        public int ToteScore
+        {
+            get
+            {
+                return Stacks.Sum(s => s.ToteScore);
+            }
+        }
+
+        public int LitterScore
+        {
+            get
+            {
+                var litterScore = scoredLitter + (unprocessedLitter * 4);
+                var cannedLitter = Stacks.Sum(s => s.LitterScore);
+                return litterScore + cannedLitter;
+            }
+        }
+
+        public int TotalScore
+        {
+            get
+            {
+                return AutoScore + CanScore + CoopScore + LitterScore + ToteScore;
             }
         }
     }

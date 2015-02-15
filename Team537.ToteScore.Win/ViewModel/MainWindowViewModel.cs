@@ -16,6 +16,20 @@ namespace Team537.ToteScore.Win.ViewModel
         //    get { return this.TotalScore == 0; }
         //}
 
+        private int matchNumber;
+        public int MatchNumber
+        {
+            get { return matchNumber; }
+            set
+            {
+                if (value != matchNumber)
+                {
+                    matchNumber = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
         public Alliance Red { get; private set; }
 
         public Alliance Blue { get; private set; }
@@ -67,6 +81,19 @@ namespace Team537.ToteScore.Win.ViewModel
                 }
             }
         }
-        
+
+        private string resultsAddress;
+        public string ResultsAddress
+        {
+            get { return resultsAddress; }
+            set
+            {
+                if (value != resultsAddress)
+                {
+                    resultsAddress = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
     }
 }

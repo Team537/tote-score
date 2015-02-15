@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Team537.ToteScore.Win.Model;
 using Team537.ToteScore.Win.ViewModel;
 
 namespace Team537.ToteScore.Win
@@ -134,6 +137,34 @@ namespace Team537.ToteScore.Win
 
             viewModel.CanConnect = true;
             viewModel.CanDisconnect = false;
+        }
+
+        private async void CommitButton_Click(object sender, RoutedEventArgs e)
+        {
+            var results = new MatchResults();
+
+            results.MatchNumber = viewModel.MatchNumber;
+
+            results.RedScore = viewModel.Red.TotalScore;
+            results.RedCoopScore = viewModel.Red.CoopScore;
+            results.RedAutoScore = viewModel.Red.AutoScore;
+            results.RedCanScore = viewModel.Red.CanScore;
+            results.RedToteScore = viewModel.Red.ToteScore;
+            results.RedLitterScore = viewModel.Red.LitterScore;
+
+            results.BlueScore = viewModel.Blue.TotalScore;
+            results.BlueCoopScore = viewModel.Blue.CoopScore;
+            results.BlueAutoScore = viewModel.Blue.AutoScore;
+            results.BlueCanScore = viewModel.Blue.CanScore;
+            results.BlueToteScore = viewModel.Blue.ToteScore;
+            results.BlueLitterScore = viewModel.Blue.LitterScore;
+
+            using(var httpClient = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(results);
+                var requestContent = new StringContent(json);
+                await httpClient.PostAsync(viewModel.ResultsAddress, requestContent);
+            }
         }
     }
 }
