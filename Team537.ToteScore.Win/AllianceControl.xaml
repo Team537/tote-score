@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="Team537.ToteScore.Win.AllianceControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock TextAlignment="Center">
+                <Run>Red Score: </Run>
+                <Run Text="{Binding TotalScore, Mode=OneWay}" />
+            </TextBlock>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <TextBlock VerticalAlignment="Center">Auto</TextBlock>
+            <ToggleButton Width="80" Margin="5" IsChecked="{Binding RobotSet}">Robot Set</ToggleButton>
+            <ToggleButton Width="80" Margin="5" IsChecked="{Binding ToteSet}">Tote Set</ToggleButton>
+            <ToggleButton Width="80" Margin="5" IsChecked="{Binding StackedToteSet}">Stacked Tote Set</ToggleButton>
+            <ToggleButton Width="80" Margin="5" IsChecked="{Binding ContainerSet}">Container Set</ToggleButton>
+        </StackPanel>
+
+        <TextBlock Text="Stacks:" Grid.Row="2" />
+
+        <ListBox Grid.Row="3" ItemsSource="{Binding Stacks}" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="25">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <ToggleButton Grid.Column="0" IsChecked="{Binding Height0}">X</ToggleButton>
+                        <ToggleButton Grid.Column="1" IsChecked="{Binding Height1}">1</ToggleButton>
+                        <ToggleButton Grid.Column="2" IsChecked="{Binding Height2}">2</ToggleButton>
+                        <ToggleButton Grid.Column="3" IsChecked="{Binding Height3}">3</ToggleButton>
+                        <ToggleButton Grid.Column="4" IsChecked="{Binding Height4}">4</ToggleButton>
+                        <ToggleButton Grid.Column="5" IsChecked="{Binding Height5}">5</ToggleButton>
+                        <ToggleButton Grid.Column="6" IsChecked="{Binding Height6}">6</ToggleButton>
+                        <ToggleButton Grid.Column="7" IsChecked="{Binding Can}">Can</ToggleButton>
+                        <ToggleButton Grid.Column="8" IsChecked="{Binding Litter}">Litter</ToggleButton>
+
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button Grid.Row="4" x:Name="AddStackButton" Width="100" Click="AddStackButton_Click">Add Stack</Button>
+
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right">Unprocessed</TextBlock>
+            <TextBox Grid.Column="1" Width="100" Margin="5" Text="{Binding UnprocessedLitter}"></TextBox>
+
+            <TextBlock Grid.Column="2" VerticalAlignment="Center" TextAlignment="Right">Landfill</TextBlock>
+            <TextBox Grid.Column="3" Width="100" Margin="5" Text="{Binding ScoredLitter}"></TextBox>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="6">
+            <TextBlock VerticalAlignment="Center">Coopertition</TextBlock>
+            <ToggleButton Width="100" Margin="5" IsChecked="{Binding CoopertitionSet}">Set</ToggleButton>
+            <ToggleButton Width="100" Margin="5" IsChecked="{Binding CoopertitionStack}">Stack</ToggleButton>
+        </StackPanel>
+    </Grid>
+</UserControl>

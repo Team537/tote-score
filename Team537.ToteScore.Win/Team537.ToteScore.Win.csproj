@@ -53,8 +53,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AllianceControl.xaml.cs">
+      <DependentUpon>AllianceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Alliance.cs" />
     <Compile Include="Model\CommandHandler.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Page Include="AllianceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

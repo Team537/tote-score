@@ -34,7 +34,8 @@ namespace Team537.ToteScore.Win
             InitializeComponent();
 
             viewModel = new MainWindowViewModel();
-            viewModel.PropertyChanged += viewModel_PropertyChanged;
+            viewModel.Red.PropertyChanged += AlliancePropertyChanged;
+            viewModel.Blue.PropertyChanged += AlliancePropertyChanged;
 
             viewModel.ConnectionAddress = "127.0.0.1";
             viewModel.CanConnect = true;
@@ -43,11 +44,20 @@ namespace Team537.ToteScore.Win
             this.DataContext = viewModel;
         }
 
-        void viewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void AlliancePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "TotalScore" && client != null && client.Connected && writer != null)
+            if (e.PropertyName == "TotalScore")
             {
-                var command = String.Format("{0} {1}", viewModel.IsRed ? "rs" : "bs", viewModel.TotalScore);
+                this.SendScore(true, viewModel.Red.TotalScore);
+                this.SendScore(false, viewModel.Blue.TotalScore);
+            }
+        }
+
+        private void SendScore(bool isRed, int score)
+        {
+            if (client != null && client.Connected && writer != null)
+            {
+                var command = String.Format("{0} {1}", isRed ? "rs" : "bs", score);
 
                 try
                 {
@@ -55,7 +65,7 @@ namespace Team537.ToteScore.Win
                     writer.Flush();
                     Debug.WriteLine("command sent");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
                     this.Disconnect();
@@ -63,17 +73,13 @@ namespace Team537.ToteScore.Win
             }
         }
 
-        private void AddStackButton_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.AddStack();
-        }
-
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             var messageBoxResult = MessageBox.Show("Are you sure you want to reset? Cannot be undone.", "", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                viewModel.Reset();
+                viewModel.Red.Reset();
+                viewModel.Blue.Reset();
             }
         }
 
@@ -102,6 +108,9 @@ namespace Team537.ToteScore.Win
                 MessageBox.Show(ex.Message);
                 Debug.WriteLine(ex.Message);
             }
+
+            this.SendScore(true, viewModel.Red.TotalScore);
+            this.SendScore(false, viewModel.Blue.TotalScore);
         }
 
         private void Disconnect_Click(object sender, RoutedEventArgs e)
